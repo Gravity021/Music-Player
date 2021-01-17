@@ -3,11 +3,11 @@ import os
 import json
 from ctypes import windll
 import getpass
-from font import Font
+from Data.font import Font
 
 SetWindowPos = windll.user32.SetWindowPos
 
-with open("config.json") as file:
+with open("Data/config.json") as file:
     data = json.load(file)
     file.close()
 
@@ -20,7 +20,7 @@ SetWindowPos(pygame.display.get_wm_info()['window'], -1, data["window_position"]
 
 ctrl = False
 
-font = Font("small_font.png", (1, 1, 1), 3, 1)
+font = Font("Data/small_font.png", (1, 1, 1), 3, 1)
 
 channel = pygame.mixer.Channel(1)
 volume = 100
@@ -36,7 +36,12 @@ def scan():
                 for file in files:
                     if file.split(".")[-1] == "wav" or file.split(".")[-1] == "mp3":
                         name = " ".join(file.split("_")).split(".")[0]
-                        songs.append([name, dir, pygame.mixer.Sound(os.path.join(root, file)), pygame.image.load(os.path.join(root, dir +".jpg"))])
+                        sound = pygame.mixer.Sound(os.path.join(root, file))
+                        try:
+                            image = pygame.image.load(os.path.join(root, dir +".jpg"))
+                        except Exception:
+                            image = pygame.image.load(os.path.join(root, dir +".png"))
+                        songs.append([name, dir, sound, image])
                 
     if len(songs) != 0:
         channel.play(songs[0][2])

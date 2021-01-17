@@ -1,5 +1,5 @@
 import pygame
-import image_handling as image_handling
+import Data.image_handling as image_handling
 
 class Font:
     def __init__(self, fontsheet, font_colour, space_width, offset=1):

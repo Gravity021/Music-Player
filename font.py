@@ -11,10 +11,11 @@ class Font:
             self.font_order = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
             "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
             ".","-",",",":","+","'","!","?","0","1","2","3","4","5","6","7","8","9","(",")","/","_","=","\\","[","]","*",'"',"<",">",";"]
+
         fontsheet_img = pygame.image.load(fontsheet).convert()
         if font_colour == (0, 0, 0):
-            self.fontsheet = image_handling.change_colour(fontsheet_img, (0, 0, 0), (255, 255, 255))
-            self.fontsheet = image_handling.change_colour(fontsheet_img, (255, 0, 0), (font_colour))
+            fontsheet = image_handling.change_colour(fontsheet_img, (0, 0, 0), (255, 255, 255))
+            self.fontsheet = image_handling.change_colour(fontsheet, (255, 0, 0), (font_colour))
             self.fontsheet.set_colorkey((255, 255, 255))
         else:
             self.fontsheet = image_handling.change_colour(fontsheet_img, (255, 0, 0), (font_colour))
@@ -53,7 +54,7 @@ class Font:
             else:
                 x_offset += self.space_width + self.offset
         
-        return [x_offset + offset[0], self.font[char].get_width() + self.offset + offset[1]]
+        return [offset[0] - x_offset, offset[1] - self.font["A"].get_height()]
     
     def scale(self, surf):
         return pygame.transform.scale(surf, (surf.get_width() * 2, surf.get_height() * 2))
